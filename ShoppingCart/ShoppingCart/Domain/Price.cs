@@ -2,7 +2,7 @@
 {
     public class Price
     {
-        public Price(int denomination, Currency currency)
+        public Price(double denomination, Currency currency)
         {
             Denomination = denomination;
             Currency = currency;
@@ -27,7 +27,12 @@
 
         public override int GetHashCode()
         {
-            return string.Format("{0}:{1}", Denomination, Currency).GetHashCode();
+            return ToString().GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}", Denomination, Currency);
         }
     }
 }
