@@ -4,22 +4,23 @@ namespace ShoppingCart.Domain
 {
     public class LineItem
     {
-        private readonly string itemName;
-        private readonly int quantity = 1;
+        private readonly Product product;
+        private readonly int quantity = 1;        
 
-        public LineItem(string itemName)
+        public LineItem(Product product)
         {
-            this.itemName = itemName;
+            this.product = product;
         }
 
-        public LineItem(string itemName, int quantity)
+        public LineItem(Product product, int quantity)
         {
-            this.itemName = itemName;
-            this.quantity = quantity;           
+            this.product = product;
+            this.quantity = quantity;
         }
 
-        public string ItemName {
-            get { return itemName; }
+        public Product Product
+        {
+            get { return product; }
         }
 
         public int Quantity
@@ -37,18 +38,18 @@ namespace ShoppingCart.Domain
             else
             {
                 LineItem item = (LineItem)obj;
-                return itemName == item.itemName;
+                return Product.Equals(item.Product) && Quantity == item.Quantity;
             }
         }
 
         public override int GetHashCode()
         {
-            return itemName.GetHashCode();
+            return ToString().GetHashCode();
         }
 
         public override string ToString()
         {
-            return String.Format("Item(ItemName:{0})", itemName);
+            return String.Format("{0}:{1})", product.ToString(),quantity);
         }
     }
 }

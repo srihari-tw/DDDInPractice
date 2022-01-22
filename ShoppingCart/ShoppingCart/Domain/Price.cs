@@ -34,5 +34,12 @@
         {
             return string.Format("{0}:{1}", Denomination, Currency);
         }
+
+        public Price ReduceBy(double discountPercentage)
+        {
+            double reduction = Denomination * discountPercentage / 100.00;
+            return new Price(Denomination - reduction, Currency);
+
+        }
     }
 }

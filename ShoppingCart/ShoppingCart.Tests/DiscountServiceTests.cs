@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ShoppingCart.Domain.Services;
 using ShoppingCart.Domain;
 using Xunit;
 

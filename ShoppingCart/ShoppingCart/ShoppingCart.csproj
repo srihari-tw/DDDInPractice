@@ -10,11 +10,17 @@
     <None Remove="Exceptions\" />
     <None Remove="Domain\Services\" />
     <None Remove="Domain\Interfaces\" />
+    <None Remove="Domain\Factories\" />
+    <None Remove="Domain\Banking\" />
+    <None Remove="Domain\Banking\Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Domain\Services\" />
     <Folder Include="Domain\Interfaces\" />
+    <Folder Include="Domain\Factories\" />
+    <Folder Include="Domain\Banking\" />
+    <Folder Include="Domain\Banking\Factories\" />
   </ItemGroup>
 </Project>

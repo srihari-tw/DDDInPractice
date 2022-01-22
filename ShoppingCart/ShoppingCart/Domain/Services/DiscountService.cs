@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using ShoppingCart.Domain;
 
-namespace ShoppingCart
+namespace ShoppingCart.Domain.Services
 {
     public class DiscountService : IDiscountService
     {
+        // TODO: This is can come from an application service and fed into a domain service as an input!
         private Dictionary<string, Price> competitorPriceMap = new Dictionary<string, Price>()
         {
             { "iPad Pro", new Price(50000,Currency.INR) },
@@ -16,9 +17,8 @@ namespace ShoppingCart
         {
             if (competitorPriceMap.ContainsKey(productName))
             {
-                double competitorDenomination = competitorPriceMap[productName].Denomination;
-                Price discountedPrice = new Price(competitorDenomination - 0.1 * competitorDenomination, price.Currency);
-                return discountedPrice;
+                Price competitorPrice = competitorPriceMap[productName];
+                return competitorPrice.ReduceBy(10);
             }
             else
             {

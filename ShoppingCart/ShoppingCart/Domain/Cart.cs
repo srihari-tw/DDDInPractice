@@ -9,7 +9,12 @@ namespace ShoppingCart.Domain
         private List<LineItem> items = new List<LineItem>();
         private List<string> removedItems = new List<string>();
         private readonly Guid cartId = Guid.NewGuid();
+        private bool isCheckedOut = false;
 
+        public bool IsCheckedOut
+        {
+            get { return isCheckedOut; }
+        }
         public int ItemCount
         {
             get
@@ -32,6 +37,7 @@ namespace ShoppingCart.Domain
             }
 
             items.Add(item);
+            isCheckedOut = false;
         }
 
         public void RemoveMatchingItem(string itemName)
@@ -40,7 +46,7 @@ namespace ShoppingCart.Domain
             var itemsClone = new List<LineItem>(items);
             foreach (LineItem item in items)
             {
-                if (item.ItemName == itemName)
+                if (item.Product.Name == itemName)
                 {
                     itemsClone.Remove(item);
                 }
@@ -71,6 +77,22 @@ namespace ShoppingCart.Domain
         public override int GetHashCode()
         {
             return cartId.GetHashCode();
+        }
+
+        public void CheckOut()
+        {
+            isCheckedOut = true;
+        }
+
+        public List<Product> GetProducts()
+        {
+            List<Product> products = new List<Product>();
+            foreach (LineItem item in items)
+            {
+                products.Add(item.Product);
+            }
+
+            return products;
         }
     }
 }

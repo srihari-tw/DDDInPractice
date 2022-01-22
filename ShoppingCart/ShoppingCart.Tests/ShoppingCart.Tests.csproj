@@ -22,4 +22,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ShoppingCart\ShoppingCart.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="BankingTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Banking\" />
+  </ItemGroup>
 </Project>
