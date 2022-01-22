@@ -110,5 +110,26 @@ namespace ShoppingCart.Tests
             Console.WriteLine(item.ToString());
             Assert.True("Item(ItemName:iPad)".Equals(item.ToString()));
         }
+
+        [Fact]
+        public void ShouldReturnFalseWhenTwoCartsWithSameItemsAreCompared()
+        {
+            Cart cart1 = new Cart();
+            Cart cart2 = new Cart();
+            LineItem lineItem1 = new LineItem("iPad");
+            LineItem lineItem2 = new LineItem("iPad");
+            cart1.AddItem(lineItem1);
+            cart2.AddItem(lineItem2);
+            Assert.False(cart1.Equals(cart2));
+        }
+
+        [Fact]
+        public void ShouldReturnTrueWhenSameCartIsCompared()
+        {
+            Cart cart1 = new Cart();
+            LineItem lineItem1 = new LineItem("iPad");
+            cart1.AddItem(lineItem1);
+            Assert.True(cart1.Equals(cart1));
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace ShoppingCart.Domain
     {
         private List<LineItem> items = new List<LineItem>();
         private List<string> removedItems = new List<string>();
+        private readonly Guid cartId = Guid.NewGuid();
 
         public int ItemCount
         {
@@ -51,6 +52,25 @@ namespace ShoppingCart.Domain
         public List<string> GetRemovedItems()
         {
             return removedItems;
+        }
+
+        public override bool Equals(object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Cart cart = (Cart)obj;
+                return cartId == cart.cartId;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return cartId.GetHashCode();
         }
     }
 }
