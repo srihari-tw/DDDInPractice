@@ -51,7 +51,6 @@ namespace ShoppingCart.Domain
         public List<string> GetRemovedItems()
         {
             return removedItems;
-
         }
     }
 }
