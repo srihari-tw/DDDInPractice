@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using ShoppingCart.Domain;
 
-namespace ShoppingCart.Tests
+namespace ShoppingCart
 {
-    public class DiscountService
+    public class DiscountService : IDiscountService
     {
         private Dictionary<string, Price> competitorPriceMap = new Dictionary<string, Price>()
         {
