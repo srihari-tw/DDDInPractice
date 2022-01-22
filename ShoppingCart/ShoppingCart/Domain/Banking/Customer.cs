@@ -2,10 +2,13 @@
 
 namespace ShoppingCart.Domain.Banking
 {
+    public delegate void AddressChanged(Address address);
+
     public class Customer
     {
         private Accounts accounts;
         private readonly Guid customerId = Guid.NewGuid();
+        public event AddressChanged AddressChanged;
 
         public Address Address { get; private set; }
         public Accounts Accounts { get { return accounts; } }
@@ -15,6 +18,11 @@ namespace ShoppingCart.Domain.Banking
         {
             this.accounts = accounts;
             Address = address;
+
+            foreach (Account account in this.accounts)
+            {
+                AddressChanged += account.ChangeAddress;
+            }
         }
 
         public override bool Equals(object obj)
@@ -38,10 +46,8 @@ namespace ShoppingCart.Domain.Banking
 
         public void ChangeAddress(Address address)
         {
-            foreach (Account account in accounts)
-            {
-                account.ChangeAddress(address);
-            }
+            Address = address;
+            AddressChanged(address);
         }
     }
 }

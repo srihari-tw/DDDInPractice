@@ -3,6 +3,7 @@ using ShoppingCart.Domain.Banking.Factories;
 
 namespace ShoppingCart.Domain.Banking
 {
+
     public class Account
     {
         private readonly Guid accountId = Guid.NewGuid();
