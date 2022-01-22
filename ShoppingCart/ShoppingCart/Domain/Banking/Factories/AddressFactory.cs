@@ -2,6 +2,9 @@
 {
     public class AddressFactory
     {
-        public static Address Get(string city) => new Address(city);
+        public static Address Get(string city)
+        {
+            return new(city);
+        }
     }
 }

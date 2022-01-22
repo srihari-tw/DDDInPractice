@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using ShoppingCart.Domain;
 
 namespace ShoppingCart.Domain.Services
 {
     public class DiscountService : IDiscountService
     {
         // TODO: This is can come from an application service and fed into a domain service as an input!
-        private Dictionary<string, Price> competitorPriceMap = new Dictionary<string, Price>()
+        private readonly Dictionary<string, Price> competitorPriceMap = new()
         {
             { "iPad Pro", new Price(50000,Currency.INR) },
             { "Hero Ink Pen", new Price(35,Currency.INR) },

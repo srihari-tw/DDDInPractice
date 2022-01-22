@@ -1,5 +1,4 @@
-﻿using System;
-namespace ShoppingCart.Domain.Services
+﻿namespace ShoppingCart.Domain.Services
 {
     public class CheckoutService
     {

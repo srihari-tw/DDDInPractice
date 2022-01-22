@@ -1,5 +1,4 @@
-﻿using System;
-namespace ShoppingCart.Domain
+﻿namespace ShoppingCart.Domain
 {
     public enum Currency
     {

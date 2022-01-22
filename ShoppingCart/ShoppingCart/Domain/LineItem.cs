@@ -1,37 +1,26 @@
-﻿using System;
-
-namespace ShoppingCart.Domain
+﻿namespace ShoppingCart.Domain
 {
     public class LineItem
     {
-        private readonly Product product;
-        private readonly int quantity = 1;        
-
         public LineItem(Product product)
         {
-            this.product = product;
+            Product = product;
         }
 
         public LineItem(Product product, int quantity)
         {
-            this.product = product;
-            this.quantity = quantity;
+            Product = product;
+            Quantity = quantity;
         }
 
-        public Product Product
-        {
-            get { return product; }
-        }
+        public Product Product { get; }
 
-        public int Quantity
-        {
-            get { return quantity; }
-        }
+        public int Quantity { get; } = 1;
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
@@ -49,7 +38,7 @@ namespace ShoppingCart.Domain
 
         public override string ToString()
         {
-            return String.Format("{0}:{1})", product.ToString(),quantity);
+            return string.Format("{0}:{1})", Product.ToString(),Quantity);
         }
     }
 }

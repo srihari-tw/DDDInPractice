@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ShoppingCart.Domain
+﻿namespace ShoppingCart.Domain
 {
     public class Product
     {
@@ -10,13 +8,21 @@ namespace ShoppingCart.Domain
             Price = price;
         }
 
+        public Product(string name, Price price, double weight)
+        {
+            Name = name;
+            Price = price;
+            WeightInGrams = weight;
+        }
+
+        public double WeightInGrams { get; private set; }
         public string Name { get; private set; }
         public Price Price { get; private set; }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }

@@ -1,5 +1,4 @@
-﻿using System;
-namespace ShoppingCart.Domain.Factories
+﻿namespace ShoppingCart.Domain.Factories
 {
     public class ProductFactory
     {
@@ -10,6 +9,11 @@ namespace ShoppingCart.Domain.Factories
         public static Product Get(string productName, double denomination, Currency currency)
         {
             return new Product(productName, new Price(denomination, currency));
+        }
+
+        public static Product Get(string productName, double denomination, Currency currency, double weightInGrams)
+        {
+            return new Product(productName, new Price(denomination, currency), weightInGrams);
         }
     }
 }

@@ -6,15 +6,12 @@ namespace ShoppingCart.Domain
 {
     public class Cart
     {
-        private List<LineItem> items = new List<LineItem>();
-        private List<string> removedItems = new List<string>();
+        private List<LineItem> items = new();
+        private readonly List<string> removedItems = new();
         private readonly Guid cartId = Guid.NewGuid();
-        private bool isCheckedOut = false;
 
-        public bool IsCheckedOut
-        {
-            get { return isCheckedOut; }
-        }
+        public bool IsCheckedOut { get; private set; }
+
         public int ItemCount
         {
             get
@@ -37,18 +34,18 @@ namespace ShoppingCart.Domain
             }
 
             items.Add(item);
-            isCheckedOut = false;
+            IsCheckedOut = false;
         }
 
         public void RemoveMatchingItem(string itemName)
         {
             removedItems.Add(itemName);
-            var itemsClone = new List<LineItem>(items);
+            List<LineItem> itemsClone = new(items);
             foreach (LineItem item in items)
             {
                 if (item.Product.Name == itemName)
                 {
-                    itemsClone.Remove(item);
+                    _ = itemsClone.Remove(item);
                 }
             }
 
@@ -63,7 +60,7 @@ namespace ShoppingCart.Domain
         public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
@@ -81,15 +78,18 @@ namespace ShoppingCart.Domain
 
         public void CheckOut()
         {
-            isCheckedOut = true;
+            IsCheckedOut = true;
         }
 
         public List<Product> GetProducts()
         {
-            List<Product> products = new List<Product>();
+            List<Product> products = new();
             foreach (LineItem item in items)
             {
-                products.Add(item.Product);
+                for (int i = 0; i < item.Quantity; i++)
+                {
+                    products.Add(item.Product);
+                }
             }
 
             return products;

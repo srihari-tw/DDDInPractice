@@ -6,20 +6,19 @@ namespace ShoppingCart.Domain.Banking
 
     public class Customer
     {
-        private Accounts accounts;
         private readonly Guid customerId = Guid.NewGuid();
         public event AddressChanged AddressChanged;
 
         public Address Address { get; private set; }
-        public Accounts Accounts { get { return accounts; } }
+        public Accounts Accounts { get; }
 
 
         public Customer(Accounts accounts, Address address)
         {
-            this.accounts = accounts;
+            Accounts = accounts;
             Address = address;
 
-            foreach (Account account in this.accounts)
+            foreach (Account account in accounts)
             {
                 AddressChanged += account.ChangeAddress;
             }
@@ -28,7 +27,7 @@ namespace ShoppingCart.Domain.Banking
         public override bool Equals(object obj)
         {
             //Check for null and compare run-time types.
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !GetType().Equals(obj.GetType()))
             {
                 return false;
             }
