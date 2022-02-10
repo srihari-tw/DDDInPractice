@@ -13,6 +13,7 @@
     <None Remove="Domain\Factories\" />
     <None Remove="Domain\Banking\" />
     <None Remove="Domain\Banking\Factories\" />
+    <None Remove="Domain\Events\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -22,5 +23,6 @@
     <Folder Include="Domain\Factories\" />
     <Folder Include="Domain\Banking\" />
     <Folder Include="Domain\Banking\Factories\" />
+    <Folder Include="Domain\Events\" />
   </ItemGroup>
 </Project>

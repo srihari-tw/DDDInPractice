@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ShoppingCart.Domain.Events;
 using ShoppingCart.Exceptions;
 
 namespace ShoppingCart.Domain
 {
     public class Cart
     {
+        private List<IDomainEvent> events = new();
         private List<LineItem> items = new();
-        private readonly List<string> removedItems = new();
         private readonly Guid cartId = Guid.NewGuid();
 
         public bool IsCheckedOut { get; private set; }
@@ -16,13 +18,7 @@ namespace ShoppingCart.Domain
         {
             get
             {
-                int itemCount = 0;
-                foreach (LineItem item in items)
-                {
-                    itemCount += item.Quantity;
-                }
-
-                return itemCount;
+                return items.Sum(item => item.Quantity);
             }
         }
 
@@ -33,17 +29,37 @@ namespace ShoppingCart.Domain
                 throw new InvalidItemException("Invalid item");
             }
 
-            items.Add(item);
+            ItemAddedEvent itemAddedEvent = new(item.Product, item.Quantity);
+            Apply(itemAddedEvent);
+        }
+
+        private void Apply(ItemAddedEvent itemAddedEvent)
+        {
+            events.Add(itemAddedEvent);
+            items.Add(new LineItem(itemAddedEvent.Product, itemAddedEvent.Quantity));
             IsCheckedOut = false;
         }
 
         public void RemoveMatchingItem(string itemName)
         {
-            removedItems.Add(itemName);
+            if (string.IsNullOrWhiteSpace(itemName))
+            {
+                throw new InvalidItemException("Invalid item");
+            }
+
+            ItemRemovedEvent itemRemovedEvent = new(itemName);
+            Apply(itemRemovedEvent);
+        }
+
+        private void Apply(ItemRemovedEvent itemRemovedEvent)
+        {
+            events.Add(itemRemovedEvent);
+
+
             List<LineItem> itemsClone = new(items);
             foreach (LineItem item in items)
             {
-                if (item.Product.Name == itemName)
+                if (item.Product.Name == itemRemovedEvent.ItemName)
                 {
                     _ = itemsClone.Remove(item);
                 }
@@ -54,7 +70,12 @@ namespace ShoppingCart.Domain
 
         public List<string> GetRemovedItems()
         {
-            return removedItems;
+            List<ItemRemovedEvent> itemRemovedEvents
+                = events
+                    .FindAll(item => item is ItemRemovedEvent)
+                    .ConvertAll(domainEvent => domainEvent as ItemRemovedEvent);
+
+            return itemRemovedEvents.ConvertAll<string>(itemRemovedEvent => itemRemovedEvent.ItemName);
         }
 
         public override bool Equals(object obj)
